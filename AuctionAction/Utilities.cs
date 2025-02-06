@@ -12,8 +12,15 @@ public static class Utilities
         {
             if (!Console.KeyAvailable) continue;
             var key = Console.ReadKey(true);
-            Console.WriteLine($"KEY PRESSED: {key}");
-            return players.GetPlayerByHotkey(key);
+            Console.WriteLine($"KEY PRESSED: {key.Key}");
+            try
+            {
+                return players.GetPlayerByHotkey(key);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
         return null;
     }
@@ -27,9 +34,9 @@ public static class Utilities
         var numberOfPlayers = Convert.ToInt32(Console.ReadLine());
         const int startingMoney = 250;
 
-        foreach (var playerIndex in Enumerable.Range(1, numberOfPlayers))
+        for (var i = 0; i < numberOfPlayers; i++)
         {
-            Console.WriteLine("Please enter the number of the player you want to play: ");
+            Console.WriteLine("Please enter the name of the player you want to play: ");
             var playerName = Console.ReadLine();
     
             Console.WriteLine("Please enter the hotkey you would like to use to play bids (used only in a few auction types)");
@@ -44,6 +51,8 @@ public static class Utilities
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message); // TODO: handle gracefully 
+                i--; // Do not increment I and make player try again from the beginning
+                Console.WriteLine("Player was not added, please try again.");
             }
         }
         players.PrintPlayers();

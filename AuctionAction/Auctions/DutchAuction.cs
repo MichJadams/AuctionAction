@@ -15,8 +15,10 @@ public static class DutchAuction
 
     static AuctionItem PickItem()
     {
-        var item = new AuctionItem("Chair", 145.99);
-        item.CurrentBid = 200; // set the starting bid very high
+        var item = new AuctionItem("Chair", 145.99)
+        {
+            CurrentBid = 200 // set the starting bid very high
+        };
         return item;
     }
 

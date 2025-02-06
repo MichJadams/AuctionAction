@@ -28,10 +28,16 @@ public class Players
         }
     }
 
-    public Player? GetPlayerByHotkey(ConsoleKeyInfo keyInfo)
+    public Player GetPlayerByHotkey(ConsoleKeyInfo keyInfo)
     {
-        return _playerCollection
+        var res =  _playerCollection
             .FirstOrDefault(player => player.HotKey == keyInfo.KeyChar);
+        if (res == null)
+        {
+            throw new ArgumentException($"Player {keyInfo.KeyChar} not found");
+        }
+
+        return res;
     }
     
     private bool HotkeyInUse(char keyInfo)
