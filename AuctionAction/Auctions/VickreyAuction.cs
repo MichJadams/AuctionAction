@@ -1,4 +1,6 @@
-﻿namespace AuctionAction.Auctions;
+﻿using AuctionAction.Models;
+
+namespace AuctionAction.Auctions;
 
 public static class VickreyAuction
 {
@@ -36,14 +38,22 @@ public static class VickreyAuction
                 Console.WriteLine("What does that even mean?");
             }
         }
+
+        if (bids.Count != players.GetPlayers().Count)
+        {
+            Console.WriteLine("There are no bids that have been paid.");
+        }
+        else
+        {
+            var winner = bids.OrderByDescending(x => x.Value).First();
+            var second = bids.OrderByDescending(x => x.Value).Skip(1).First();
+            
+            players.GetPlayerByName(winner.Key)?.AuctionItems.Add(selectedAuctionItem);
+            players.GetPlayerByName(winner.Key).CurrentMoney -= second.Value;
+            
+            Console.WriteLine($"The winner is {winner.Key}, they bid {winner.Value}, but will only pay the amount the running up bid which is {second.Value}");
+        }
         
-        var winner = bids.OrderByDescending(x => x.Value).First();
-        var second = bids.OrderByDescending(x => x.Value).Skip(1).First();
-        
-        players.GetPlayerByName(winner.Key)?.AuctionItems.Add(selectedAuctionItem);
-        players.GetPlayerByName(winner.Key).CurrentMoney -= second.Value;
-        
-        Console.WriteLine($"The winner is {winner.Key}, they bid {winner.Value}, but will only pay the amount the running up bid which is {second.Value}");
         
         return players;
 

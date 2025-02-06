@@ -1,29 +1,29 @@
 ﻿using AuctionAction;
 using AuctionAction.Auctions;
+using AuctionAction.Models;
 
-Console.WriteLine("Hello! Please select an auction type you are interested in.");
-Console.WriteLine("");
-
+Console.WriteLine("Hello! Please select an auction type you are interested in.\n");
 
 Console.WriteLine("1. Dutch Auction");
 Console.WriteLine("2. Vickrey Auction");
 Console.WriteLine("3. Penny Auction");
 
-var players = new Players();
+var players = Utilities.GeneratePlayers();
 
-players.AddPlayer(new Player("Michaela", 100, 'j'));
-players.AddPlayer(new Player("Lindsay", 100, 'k'));
 var selection = Console.ReadLine();
-if (selection == "1")
-{
-    DutchAuction.BeginBidding(players);
-}
 
-if (selection == "2")
+switch (selection)
 {
-    
-}
-if (selection == "3")
-{
-    PennyAuction.BeginBidding(players);
+    case "1":
+        DutchAuction.BeginBidding(players);
+        break;
+    case "2":
+        VickreyAuction.BeginBidding(players);
+        break;
+    case "3":
+        PennyAuction.BeginBidding(players);
+        break;
+    default:
+        Console.WriteLine("Please select a valid selection.\n");
+        break;
 }

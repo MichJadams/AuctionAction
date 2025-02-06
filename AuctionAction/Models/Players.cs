@@ -1,24 +1,28 @@
 ﻿using AuctionAction.Auctions;
 
-namespace AuctionAction;
+namespace AuctionAction.Models;
 
 public class Players
 {
-    private List<Player> PlayerCollection = new List<Player>();
+    private List<Player> _playerCollection = [];
 
     public void AddPlayer(Player player)
     {
-        PlayerCollection.Add(player);
+        if (HotkeyInUse(player.HotKey))
+        {
+            throw new ArgumentException($"Player {player.Name} is already added");
+        }
+        _playerCollection.Add(player);
     }
 
     public List<Player> GetPlayers()
     {
-        return PlayerCollection;
+        return _playerCollection;
     }
     public void PrintPlayers()
     {
         Console.WriteLine("Current Players and their scores");
-        foreach (var player in PlayerCollection)
+        foreach (var player in _playerCollection)
         {
             Console.WriteLine(player.ToString());
         }
@@ -26,13 +30,19 @@ public class Players
 
     public Player? GetPlayerByHotkey(ConsoleKeyInfo keyInfo)
     {
-        return PlayerCollection
+        return _playerCollection
             .FirstOrDefault(player => player.HotKey == keyInfo.KeyChar);
+    }
+    
+    private bool HotkeyInUse(char keyInfo)
+    {
+        return _playerCollection
+            .Any(p => p.HotKey == keyInfo);
     }
 
     public Player? GetPlayerByName(string name)
     {
-        return PlayerCollection.FirstOrDefault(player => player.Name == name);
+        return _playerCollection.FirstOrDefault(player => player.Name == name);
     }
 
     public bool UpdatePlayerDebts(string name, double amountToRemove)
@@ -42,10 +52,7 @@ public class Players
         {
             return false;
         }
-        else
-        {
-            player.CurrentMoney -= amountToRemove;
-            return true;
-        }
+        player.CurrentMoney -= amountToRemove;
+        return true;
     }
 }
