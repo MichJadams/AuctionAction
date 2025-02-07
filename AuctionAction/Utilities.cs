@@ -36,10 +36,10 @@ public static class Utilities
 
         for (var i = 0; i < numberOfPlayers; i++)
         {
-            Console.WriteLine("Please enter the name of the player you want to play: ");
+            Console.WriteLine($"Please enter the name of player {i}: ");
             var playerName = Console.ReadLine();
     
-            Console.WriteLine("Please enter the hotkey you would like to use to play bids (used only in a few auction types)");
+            Console.WriteLine($"Please enter the hotkey you would like to use to play bids (used only in a few auction types) for player {i}");
             var hotkey = Convert.ToChar(Console.ReadLine());
 
             var player = new Player(playerName, startingMoney, hotkey);
@@ -58,5 +58,10 @@ public static class Utilities
         players.PrintPlayers();
         
         return players;
+    }
+
+    public static void ApraiseItem(Player player, AuctionItem item)
+    {
+        
     }
 }

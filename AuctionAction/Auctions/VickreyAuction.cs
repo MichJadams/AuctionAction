@@ -15,10 +15,10 @@ public static class VickreyAuction
                           """);
     }
 
-    public static Players BeginBidding(Players players)
+    public static void BeginBidding(Players players, ItemBank itemBank)
     {
         Explain();
-        var selectedAuctionItem = new AuctionItem("Book", 45);
+        var selectedAuctionItem = itemBank.GetRandomItem();
 
         var bids = new Dictionary<string, double>();
         
@@ -35,7 +35,7 @@ public static class VickreyAuction
             }
             else
             {
-                Console.WriteLine("What does that even mean?");
+                Console.WriteLine("invalid input");
             }
         }
 
@@ -52,10 +52,7 @@ public static class VickreyAuction
             players.GetPlayerByName(winner.Key).CurrentMoney -= second.Value;
             
             Console.WriteLine($"The winner is {winner.Key}, they bid {winner.Value}, but will only pay the amount the running up bid which is {second.Value}");
+            itemBank.RemoveItemByName(selectedAuctionItem.Name);
         }
-        
-        
-        return players;
-
     }
 }

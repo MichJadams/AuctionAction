@@ -10,7 +10,7 @@ public class Players
     {
         if (HotkeyInUse(player.HotKey))
         {
-            throw new ArgumentException($"Player {player.Name} is already added");
+            throw new ArgumentException($"A player with that hotkey is already added. {player.HotKey} is already in use. Select another.");
         }
         _playerCollection.Add(player);
     }
@@ -60,5 +60,10 @@ public class Players
         }
         player.CurrentMoney -= amountToRemove;
         return true;
+    }
+
+    public List<Player> GetPlayersOrderByScore()
+    {
+        return _playerCollection.OrderByDescending(player => player.GetTotalPlayerWorth()).ToList();
     }
 }

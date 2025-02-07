@@ -16,10 +16,10 @@ public static class PennyAuction
                """);
     }
 
-    public static Players BeginBidding(Players players)
+    public static void BeginBidding(Players players, ItemBank itemBank)
     {
-        var selectedAuctionItem = new AuctionItem("Book", 45);
-
+        var selectedAuctionItem = itemBank.GetRandomItem();
+        selectedAuctionItem.CurrentBid = 5;
         var playersDebts = new Dictionary<string, double>();
         var biddingTimeLeft = 10;
         var currentWinnerName = "No bids";
@@ -34,18 +34,17 @@ public static class PennyAuction
             while (result == null && biddingTimeLeft > 0)
             {
                 biddingTimeLeft--;
-                currentWinnerName = result == null ? "No winner" : result.Name;
-                Console.WriteLine($"\t\t {biddingTimeLeft}: {currentWinnerName}, {selectedAuctionItem.Name} for {selectedAuctionItem.CurrentBid}");
                 result = Utilities.Offer(1, players);
+                currentWinnerName = result == null ? currentWinnerName : result.Name;
+                Console.WriteLine($"\t\t {biddingTimeLeft}: {currentWinnerName}, {selectedAuctionItem.Name} for {selectedAuctionItem.CurrentBid}");
             }
 
-            if (result != null)
+            if (currentWinnerName != "No bids")
             {
                 if (!playersDebts.TryAdd(selectedAuctionItem.Name, 1))
                 {
                     playersDebts[selectedAuctionItem.Name] += 1;
                 }
-                currentWinnerName = result.Name;
                 selectedAuctionItem.CurrentBid += 10;
                 biddingTimeLeft += 5;
             }
@@ -54,18 +53,25 @@ public static class PennyAuction
                 break;
             }
         }
-        
-        Console.WriteLine($"The winner is {currentWinnerName}, who won a {selectedAuctionItem.Name} for {selectedAuctionItem.CurrentBid}.");
-        Console.WriteLine("Total debts:");
 
-        foreach (var playerName in playersDebts.Keys)
+        if (currentWinnerName == "No bids")
         {
-            var debts = playersDebts[playerName];
-            players.UpdatePlayerDebts(playerName, debts);
+            Console.WriteLine("There have been no bids in the auction. I'm disappointed in all of you.");
+        }
+        else
+        {
+            
+            Console.WriteLine($"The winner is {currentWinnerName}, who won a {selectedAuctionItem.Name} for {selectedAuctionItem.CurrentBid}.");
+            Console.WriteLine("Total debts:");
+
+            foreach (var playerName in playersDebts.Keys)
+            {
+                var debts = playersDebts[playerName];
+                players.UpdatePlayerDebts(playerName, debts);
+            }
+            itemBank.RemoveItemByName(selectedAuctionItem.Name);
         }
 
         players.PrintPlayers();
-
-        return players;
     }
 }

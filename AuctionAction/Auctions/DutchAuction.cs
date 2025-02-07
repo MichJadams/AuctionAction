@@ -9,22 +9,17 @@ public static class DutchAuction
         Console.WriteLine("""
                           In a dutch auction the auctioneer starts off with a
                           high price and then slowly lowers it until someone accepts the
-                          price. So for this auction we
+                          price. So for this auction we start very high and if you want to bid, please press your 
+                          bidding hotkey. Once a bid is placed, the auction is over.
                           """);
     }
 
-    static AuctionItem PickItem()
+    public static void BeginBidding(Players players, ItemBank itemBank)
     {
-        var item = new AuctionItem("Chair", 145.99)
-        {
-            CurrentBid = 200 // set the starting bid very high
-        };
-        return item;
-    }
-
-    public static Players BeginBidding(Players players)
-    {
-        var selectedAuctionItem = PickItem();
+        Explain();
+        var selectedAuctionItem = itemBank.GetRandomItem();
+        selectedAuctionItem.CurrentBid = 300;
+        Player? winner = null;
         while (selectedAuctionItem.CurrentBid > 0)
         {
             Console.WriteLine("----------------Starting Round--------------------");
@@ -32,17 +27,20 @@ public static class DutchAuction
             foreach (var time in new List<string>{"once", "twice", "three times"})
             {
                 Console.WriteLine($"Going {time}");
-                var winner = Utilities.Offer(5, players);
+                winner = Utilities.Offer(5, players);
                 if (winner == null) continue;
                 
                 winner.CurrentMoney -= selectedAuctionItem.CurrentBid;
                 winner.AuctionItems.Add(selectedAuctionItem);
                 Console.WriteLine($"Winner: {winner}");
-                return players;
+                return;
             }
             selectedAuctionItem.CurrentBid -= 10;
         }
 
-        return players;
+        if (winner != null)
+        {
+            itemBank.RemoveItemByName(selectedAuctionItem.Name);
+        }
     }
 }

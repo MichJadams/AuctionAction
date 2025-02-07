@@ -10,6 +10,11 @@ public class Player(string name, double startingMoney, char hotKey)
 
     public override string ToString()
     {
-        return $"Name {Name}, starting money {StartingMoney}, current money {CurrentMoney} and hotkey: {HotKey}";
+        return $"Name {Name}, starting money {StartingMoney}, current money {CurrentMoney} and hotkey: {HotKey}. Total money: {GetTotalPlayerWorth()}";
+    }
+
+    public double GetTotalPlayerWorth()
+    {
+        return CurrentMoney + AuctionItems.Select(item => item.Price).Sum();
     }
 }
