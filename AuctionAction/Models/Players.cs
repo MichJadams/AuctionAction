@@ -46,9 +46,10 @@ public class Players
             .Any(p => p.HotKey == keyInfo);
     }
 
-    public Player? GetPlayerByName(string name)
+    public Player GetPlayerByName(string name)
     {
-        return _playerCollection.FirstOrDefault(player => player.Name == name);
+        return _playerCollection.FirstOrDefault(p => p.Name == name) 
+               ?? throw new ArgumentException($"Player {name} not found in player collection");
     }
 
     public bool UpdatePlayerDebts(string name, double amountToRemove)

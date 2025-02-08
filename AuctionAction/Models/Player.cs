@@ -1,4 +1,6 @@
-﻿namespace AuctionAction.Auctions;
+﻿using AuctionAction.Models;
+
+namespace AuctionAction.Auctions;
 
 public class Player(string name, double startingMoney, char hotKey)
 {

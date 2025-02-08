@@ -62,6 +62,35 @@ public static class Utilities
 
     public static void ApraiseItem(Player player, AuctionItem item)
     {
-        
+        Console.WriteLine($"Player {player}");
+        Console.WriteLine($"You now have the option to appraise {item.Name}. By spending 5 coin you will be given a price range the reflects the items 'true value'");
+        Console.WriteLine("Do you want to appraise this item? (y/n)");
+        var numberOfAppraisals = 0;
+        var appraising = true;
+        while (appraising)
+        {
+            numberOfAppraisals += 1;
+       
+            var upperEstimate = item.Price + GenerateDeviation(numberOfAppraisals);
+            var lowerEstimate = item.Price - GenerateDeviation(numberOfAppraisals); 
+            Console.WriteLine($"The item is worth between {lowerEstimate} and {upperEstimate}");
+
+            player.CurrentMoney -= 5;
+            Console.WriteLine($"Your current money is now {player.CurrentMoney}");
+            Console.WriteLine("Do you want to appraise this item farther for another 5 coin? (y/n)");
+            appraising = Console.ReadLine().ToUpper().Equals("Y");
+        }
+
+
+        Console.Clear();
     }
+    public static double GenerateDeviation(int numberOfAppraisals)
+    {
+        var baseError = 0.50;
+        var e = Math.E;
+        var decayFactor = 0.3;
+        var randomFactor = Random.Shared.Next(-100, 100) / 100.0;
+        return baseError * Math.Pow(e,-decayFactor*numberOfAppraisals) * randomFactor;
+    }
+
 }

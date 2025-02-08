@@ -32,7 +32,7 @@ while (stillPlaying)
             break;
     }
     Console.WriteLine("Play again? Y/N");
-    stillPlaying = Console.ReadLine().ToUpper() == "Y" ? true : false;
+    stillPlaying = Console.ReadLine().ToUpper().Equals("y");
 }
 
 Console.WriteLine("Final Talley of players and ultimate winner, as ordered by ending net worth.");
