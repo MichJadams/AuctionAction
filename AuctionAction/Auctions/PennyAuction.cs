@@ -19,6 +19,10 @@ public static class PennyAuction
     public static void BeginBidding(Players players, ItemBank itemBank)
     {
         var selectedAuctionItem = itemBank.GetRandomItem();
+        foreach (var player in players.GetPlayers())
+        {
+            Utilities.ApraiseItem(player, selectedAuctionItem);
+        }
         selectedAuctionItem.CurrentBid = 5;
         var playersDebts = new Dictionary<string, double>();
         var biddingTimeLeft = 10;

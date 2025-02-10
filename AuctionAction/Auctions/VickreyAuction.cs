@@ -19,7 +19,10 @@ public static class VickreyAuction
     {
         Explain();
         var selectedAuctionItem = itemBank.GetRandomItem();
-
+        foreach (var player in players.GetPlayers())
+        {
+            Utilities.ApraiseItem(player, selectedAuctionItem);
+        }
         var bids = new Dictionary<string, double>();
         
         Console.WriteLine("Bidding has begun");

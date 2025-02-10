@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionAction", "AuctionAction\AuctionAction.csproj", "{71FFCB17-7EF2-4946-AE37-6F8212C89EC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionActionTests", "AuctionActionTests\AuctionActionTests.csproj", "{6C84A664-32D4-4595-B4C5-1F4E727C4D0A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,9 +12,5 @@ Global
 		{71FFCB17-7EF2-4946-AE37-6F8212C89EC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71FFCB17-7EF2-4946-AE37-6F8212C89EC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71FFCB17-7EF2-4946-AE37-6F8212C89EC3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C84A664-32D4-4595-B4C5-1F4E727C4D0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C84A664-32D4-4595-B4C5-1F4E727C4D0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C84A664-32D4-4595-B4C5-1F4E727C4D0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C84A664-32D4-4595-B4C5-1F4E727C4D0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

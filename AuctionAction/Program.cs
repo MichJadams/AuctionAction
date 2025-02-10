@@ -4,8 +4,9 @@ using AuctionAction.Models;
 
 Console.WriteLine("Hello! We will begin with character creation.");
 
-var players = Utilities.GeneratePlayers();
 var itemBank = new ItemBank();
+
+var players = Utilities.GeneratePlayers();
 
 Console.WriteLine("Hello! Please select an auction type you are interested in.");
 
@@ -16,6 +17,8 @@ while (stillPlaying)
     Console.WriteLine("2. Vickrey Auction");
     Console.WriteLine("3. Penny Auction");
     var selection = Console.ReadLine();
+    Console.Clear();
+
     switch (selection)
     {
         case "1":
@@ -32,7 +35,9 @@ while (stillPlaying)
             break;
     }
     Console.WriteLine("Play again? Y/N");
-    stillPlaying = Console.ReadLine().ToUpper().Equals("y");
+    stillPlaying = Console.ReadLine().ToUpper().Equals("Y");
+    Console.Clear();
+
 }
 
 Console.WriteLine("Final Talley of players and ultimate winner, as ordered by ending net worth.");

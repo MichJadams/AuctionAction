@@ -18,7 +18,12 @@ public static class DutchAuction
     {
         Explain();
         var selectedAuctionItem = itemBank.GetRandomItem();
-        selectedAuctionItem.CurrentBid = 300;
+        foreach (var player in players.GetPlayers())
+        {
+            Utilities.ApraiseItem(player, selectedAuctionItem);
+        }
+        
+        selectedAuctionItem.CurrentBid = selectedAuctionItem.Price * 2;
         Player? winner = null;
         while (selectedAuctionItem.CurrentBid > 0)
         {

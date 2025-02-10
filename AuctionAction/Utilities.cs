@@ -56,41 +56,45 @@ public static class Utilities
             }
         }
         players.PrintPlayers();
-        
+        Console.Clear();
+
         return players;
     }
 
     public static void ApraiseItem(Player player, AuctionItem item)
     {
+        var price = Random.Shared.Next(5, 10);
         Console.WriteLine($"Player {player}");
-        Console.WriteLine($"You now have the option to appraise {item.Name}. By spending 5 coin you will be given a price range the reflects the items 'true value'");
+        Console.WriteLine($"You now have the option to appraise {item.Name}. By spending {price} coin you will be given a price range the reflects the items 'true value'");
         Console.WriteLine("Do you want to appraise this item? (y/n)");
         var numberOfAppraisals = 0;
-        var appraising = true;
+        var appraising = Console.ReadLine().ToUpper().Equals("Y");;
+        
         while (appraising)
         {
             numberOfAppraisals += 1;
-       
-            var upperEstimate = item.Price + GenerateDeviation(numberOfAppraisals);
-            var lowerEstimate = item.Price - GenerateDeviation(numberOfAppraisals); 
+            price = Random.Shared.Next(5, 10);
+            
+            
+            const double baseError = 0.50;
+            const double decayFactor = 0.3;
+            var errorMargin = (baseError * item.Price) * Math.Exp(-decayFactor * numberOfAppraisals);
+            
+            var randomFactorHigh = Random.Shared.Next(0, 100) / 100.0;
+            var randomFactorLow = Random.Shared.Next(-100, 0) / 100.0;
+
+            var upperEstimate = Math.Round(item.Price + (errorMargin *randomFactorHigh));
+            var lowerEstimate = Math.Round(item.Price + (errorMargin *randomFactorLow)); 
             Console.WriteLine($"The item is worth between {lowerEstimate} and {upperEstimate}");
 
-            player.CurrentMoney -= 5;
+            player.CurrentMoney -= price;
             Console.WriteLine($"Your current money is now {player.CurrentMoney}");
-            Console.WriteLine("Do you want to appraise this item farther for another 5 coin? (y/n)");
+            Console.WriteLine("Do you want to appraise this item? (y/n)");
+
             appraising = Console.ReadLine().ToUpper().Equals("Y");
         }
 
 
         Console.Clear();
     }
-    public static double GenerateDeviation(int numberOfAppraisals)
-    {
-        var baseError = 0.50;
-        var e = Math.E;
-        var decayFactor = 0.3;
-        var randomFactor = Random.Shared.Next(-100, 100) / 100.0;
-        return baseError * Math.Pow(e,-decayFactor*numberOfAppraisals) * randomFactor;
-    }
-
 }
