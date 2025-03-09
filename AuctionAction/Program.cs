@@ -45,4 +45,5 @@ var place = 1;
 foreach (var player in players.GetPlayersOrderByScore())
 {
     Console.WriteLine($"{place} - {player.ToString()}");
+    place += 1;
 }

@@ -10,6 +10,7 @@ public static class Utilities
         var startTime = DateTime.UtcNow;
         while (DateTime.UtcNow.Subtract(startTime).Seconds < duration)
         {
+            Console.WriteLine($"Key available: {!Console.KeyAvailable}");
             if (!Console.KeyAvailable) continue;
             var key = Console.ReadKey(true);
             Console.WriteLine($"KEY PRESSED: {key.Key}");
